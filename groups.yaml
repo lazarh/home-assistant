@@ -1,0 +1,61 @@
+default_view:
+  view: true
+  entities:
+  - group.time_date
+  - group.ikea
+  - group.camera
+  - group.sensors
+  - group.darksky
+  - group.yr
+  - group.switch
+  - group.spotify
+  name: default_view
+sensors:
+  name: Sensors
+  entities:
+  - sensor.temperature_1
+  - sensor.temperature_2
+  - sensor.humidity
+  - sensor.pressure
+  - sensor.light
+camera:
+  name: Living room
+  entities:
+  - camera.home
+switch:
+  name: Air Conditioner
+  entities:
+  - switch.daikin_24_c_winter
+  - switch.daikin_24_c_summer
+time_date:
+  name: Time
+  entities:
+  - sensor.worldclock
+  - time_date.date
+  - sensor.time_date_time
+  - sensor.time_date_time_utc
+  - date.time
+darksky:
+  name: Dark Sky
+  entities:
+  - sensor.dark_sky_summary
+  - sensor.dark_sky_icon
+  - sensor.dark_sky_nearest_storm_distance
+yr:
+  name: YR.no
+  entities:
+  - sensor.yr_temperature
+  - sensor.yr_symbol
+  - sensor.yr_precipitation
+  - sensor.yr_windSpeed
+  - sensor.yr_humidity
+  - sensor.yr_pressure
+spotify:
+  name: Spotify
+  entities:
+  - media_player.spotify
+ikea:
+  name: Lights
+  entities:
+  - light.bedroom
+  - light.living_room

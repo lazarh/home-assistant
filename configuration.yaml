@@ -1,0 +1,140 @@
+homeassistant:
+  name: Home
+  latitude: 42.6427
+  longitude: 23.3355
+  elevation: 565
+  unit_system: metric
+  time_zone: Europe/Sofia
+  customize: !include customize.yaml
+
+#introduction:
+
+frontend:
+
+config:
+
+http:
+  base_url: lhristov.tk:8123
+  api_password:
+
+
+updater:
+
+discovery:
+
+conversation:
+
+history:
+
+logbook:
+
+logger:
+  default: error
+
+sun:
+
+mqtt:
+  discovery: true
+  broker: 192.168.0.200
+  port: 1883
+  username: def
+  password: 
+  
+
+sensor:
+  - platform: yr
+    monitored_conditions:
+      - temperature
+      - symbol
+      - precipitation
+      - windSpeed
+      - humidity
+      - pressure
+  - platform: mqtt
+    state_topic: "home/sensors/temperature"
+    name: "Temperature 1"
+    unit_of_measurement: "C"
+    value_template: '{{value_json.temperature}}'
+  - platform: mqtt
+    state_topic: 'home/sensors/temperature1'
+    name: 'Temperature 2'
+    unit_of_measurement: 'C'
+    value_template: '{{value_json.temperature}}'
+  - platform: mqtt
+    state_topic: 'home/sensors/humidity'
+    name: 'Humidity'
+    unit_of_measurement: '%'
+    value_template: '{{value_json.humidity}}'
+  - platform: mqtt
+    state_topic: 'home/sensors/pressure'
+    name: 'Pressure'
+    unit_of_measurement: 'hPa'
+    value_template: '{{value_json.pressure}}'
+  - platform: mqtt
+    state_topic: 'home/sensors/light'
+    name: 'Light'
+    unit_of_measurement: 'lux'
+    value_template: '{{value_json.light}}'
+  - platform: darksky
+    api_key: a2480af884f783fef9be1bd823753686
+    monitored_conditions:
+      - summary
+      - icon
+      - nearest_storm_distance
+  - platform: time_date
+    display_options:
+      - date
+      - time
+      - time_utc
+      - beat
+  - platform: transmission
+    host: 192.168.0.200
+    username: transmission
+    password: transmission
+    monitored_variables:
+      - current_status
+      - download_speed
+      - upload_speed
+  - platform: worldclock
+    time_zone: Europe/Sofia
+
+camera:
+  - platform: ffmpeg
+    input: -rtsp_transport tcp -i rtsp://192.168.0.220/unicast
+    name: Home
+    extra_arguments: -q:v 2 -pred 1
+
+switch:
+  - platform: mqtt
+    name: "Daikin 24 C Summer"
+    command_topic: "home/action/daikinsummer"
+    payload_on: "1"
+    payload_off: "0"
+    optimistic: false
+    qos: 0
+    value_template: '{{ value_json.status }}'
+  - platform: mqtt
+    name: "Daikin 24 C Winter"
+    command_topic: "home/action/daikinwinter"
+    payload_on: "1"
+    payload_off: "0"
+    optimistic: false
+    qos: 0
+    value_template: '{{ value_json.status }}'
+
+media_player:
+  - platform: spotify
+    client_id: 0ab02d5d6f7f421286b4271797553aaa
+    client_secret: 06d6cfcc89bb4bdd89ddc08d782e6cac
+
+tradfri:
+  host: 192.168.0.230
+
+tts:
+  platform: google
+
+recorder:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+
